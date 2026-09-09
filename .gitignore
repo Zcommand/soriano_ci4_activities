@@ -1,0 +1,6 @@
+.DS_Store
+**/.env
+**/vendor/
+**/writable/logs/*.log
+**/writable/session/*
+**/writable/cache/*

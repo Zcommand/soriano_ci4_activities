@@ -24,6 +24,9 @@ POS System - About
     <p>
         This Point-of-Sale system is built using CodeIgniter 4 and follows
         the Model-View-Controller architecture.
+    <br>
+        Submitted for IT0049 (Web System Technologies). Technical Formative
+        Assessment:FROM ZERO TO FOUR PAGES: YOUR FIRST CODEIGNITER APPLICATION
     </p>
 </div>
 

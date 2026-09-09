@@ -31,6 +31,15 @@
         <?= $this->renderSection('content') ?>
     </main>
 
+    <footer class="footer">
+
+        <div class="footer-container">
+            <p>Developed by John Ronen Soriano</p>
+            <p>For educational purposes only.</p>
+        </div>
+
+    </footer>
+
 </body>
 
 </html>

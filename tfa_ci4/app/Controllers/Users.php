@@ -35,6 +35,5 @@ class Users extends BaseController
         ];
 
         return view('users/index', ['users' => $users]);
-
     }
 }

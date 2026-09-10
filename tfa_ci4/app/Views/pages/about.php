@@ -6,7 +6,6 @@ POS System - About
 
 <?= $this->section('content') ?>
 
-<!-- Page Heading -->
 
 <div class="page-heading-row">
 
@@ -27,9 +26,7 @@ POS System - About
 <section class="about-grid">
 
     <div class="card about-main">
-
         <span class="section-label">THE PROJECT</span>
-
         <h2>A foundation for a Point-of-Sale system.</h2>
 
         <p>
@@ -44,7 +41,6 @@ POS System - About
             PHP arrays, serving as temporary data sources before database
             integration is introduced.
         </p>
-
     </div>
 
 
@@ -85,57 +81,43 @@ POS System - About
 <section class="concept-section">
 
     <div class="concept-heading">
-
         <span class="section-label">HOW IT WORKS</span>
-
         <h2>Built around the MVC workflow</h2>
-
     </div>
 
 
     <div class="concept-grid">
 
         <div class="concept-card">
-
             <span>01</span>
-
             <h3>Route</h3>
-
             <p>
                 Receives the requested URL and determines which
                 controller method should run.
             </p>
-
         </div>
 
 
         <div class="concept-card">
 
             <span>02</span>
-
             <h3>Controller</h3>
-
             <p>
                 Handles the request, prepares the required data,
                 and selects the appropriate view.
             </p>
-
         </div>
 
 
         <div class="concept-card">
 
             <span>03</span>
-
             <h3>View</h3>
-
             <p>
                 Receives the data and renders the final interface
                 displayed in the browser.
             </p>
-
         </div>
-
     </div>
 
 </section>

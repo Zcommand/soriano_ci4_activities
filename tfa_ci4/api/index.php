@@ -20,4 +20,10 @@ foreach ($directories as $directory) {
 
 define('WRITEPATH', $tmpPath);
 
+/*
+ * Vercel production URL
+ */
+$_ENV['app.baseURL'] = 'https://soriano-pos-ci4.vercel.app/';
+$_SERVER['app.baseURL'] = 'https://soriano-pos-ci4.vercel.app/';
+
 require __DIR__ . '/../public/index.php';

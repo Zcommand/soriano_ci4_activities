@@ -14,7 +14,7 @@ POS System - About
     </div>
 
     <a href="<?= site_url('/') ?>" class="back-link">
-        ← Back to Home
+        ← Return
     </a>
 
 </div>

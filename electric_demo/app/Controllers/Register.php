@@ -32,7 +32,7 @@ class Register extends BaseController
         $validation->setRules([
             'first_name' => 'required|min_length[2]|max_length[100]',
             'last_name' => 'required|min_length[2]|max_length[100]',
-            'email' => 'required|valid_email|is_unique[users.email]',
+            'email' => 'required|valid_email|is_unique[USERS.email]',
             'phone' => 'required|min_length[10]|max_length[20]',
             'address' => 'required|min_length[5]|max_length[255]',
             'city' => 'required|min_length[2]|max_length[100]',
@@ -68,7 +68,7 @@ class Register extends BaseController
 
             if ($userId) {
                 session()->setFlashdata('success', 'Registration successful! Welcome to PowerFlow Electric. You can now contact us for your electrical needs.');
-                return redirect()->to('/register');
+                return redirect()->to(base_url('register'));
             }
 
             session()->setFlashdata('error', 'Registration failed. Please try again.');

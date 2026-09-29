@@ -47,6 +47,6 @@ class Contact extends BaseController
         ];
 
         session()->setFlashdata('success', 'Thank you for your message! We will contact you within 24 hours.');
-        return redirect()->to('/contact');
+        return redirect()->to(base_url('contact'));
     }
 }

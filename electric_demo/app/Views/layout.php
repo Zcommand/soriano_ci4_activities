@@ -6,7 +6,7 @@
     <title><?= isset($title) ? esc($title) : 'Puihaha Electric' ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="<?= base_url('assets/css/custom.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('public/assets/css/custom.css?v=20261002f') ?>" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1e40af;
@@ -166,6 +166,17 @@
                 <li class="nav-item"><a class="nav-link <?= (isset($page) && $page === 'services') ? 'active' : '' ?>" href="<?= base_url('services') ?>">Services</a></li>
                 <li class="nav-item"><a class="nav-link <?= (isset($page) && $page === 'contact') ? 'active' : '' ?>" href="<?= base_url('contact') ?>">Contact</a></li>
                 <li class="nav-item"><a class="nav-link <?= (isset($page) && $page === 'register') ? 'active' : '' ?>" href="<?= base_url('register') ?>">Register</a></li>
+                <?php if (session()->get('isLogged') === true): ?>
+                    <li class="nav-item"><a class="nav-link <?= (isset($page) && $page === 'customers') ? 'active' : '' ?>" href="<?= base_url('customers') ?>">Customers</a></li>
+                    <li class="nav-item">
+                        <form action="<?= base_url('logout') ?>" method="post" class="d-inline">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="nav-link btn btn-link px-2">Logout</button>
+                        </form>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item"><a class="nav-link <?= (isset($page) && $page === 'login') ? 'active' : '' ?>" href="<?= base_url('login') ?>">Login</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
@@ -229,6 +240,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url('assets/js/app.js') ?>"></script>
+<script src="<?= base_url('public/assets/js/app.js?v=20261002f') ?>"></script>
 </body>
 </html>

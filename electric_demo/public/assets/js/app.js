@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initFormEnhancements();
     initNavigationEffects();
     initCounterAnimations();
+    initPasswordToggles();
 
     function initScrollAnimations() {
         const observerOptions = {
@@ -106,6 +107,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function initPasswordToggles() {
+        document.querySelectorAll('.password-toggle').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const target = document.getElementById(this.dataset.target);
+                const icon = this.querySelector('i');
+
+                if (!target) {
+                    return;
+                }
+
+                const isPassword = target.type === 'password';
+                target.type = isPassword ? 'text' : 'password';
+
+                if (icon) {
+                    icon.classList.toggle('fa-eye', !isPassword);
+                    icon.classList.toggle('fa-eye-slash', isPassword);
+                }
+            });
+        });
+    }
+
     function calculatePasswordStrength(password) {
         let strength = 0;
         if (password.length >= 8) strength++;
@@ -172,14 +194,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    if (document.body.classList.contains('auth-body')) {
+        return;
+    }
+
     const backToTopBtn = document.createElement('button');
     backToTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    backToTopBtn.className = 'btn btn-primary position-fixed';
-    backToTopBtn.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000; border-radius: 50%; width: 50px; height: 50px; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);';
+    backToTopBtn.className = 'btn btn-primary position-fixed back-to-top-btn';
+    backToTopBtn.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000; display: none;';
     document.body.appendChild(backToTopBtn);
 
     window.addEventListener('scroll', function() {
-        backToTopBtn.style.display = window.pageYOffset > 300 ? 'block' : 'none';
+        backToTopBtn.style.display = window.pageYOffset > 300 ? 'inline-flex' : 'none';
     });
 
     backToTopBtn.addEventListener('click', function() {

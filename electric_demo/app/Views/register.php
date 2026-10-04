@@ -63,8 +63,9 @@
                                         <?php if (isset($validation['last_name'])): ?><div class="invalid-feedback"><?= esc($validation['last_name']) ?></div><?php endif; ?>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="email" class="form-label fw-semibold">Email Address *</label>
+                                        <label for="email" class="form-label fw-semibold">Email Address / Login Username *</label>
                                         <input type="email" class="form-control form-control-lg <?= isset($validation['email']) ? 'is-invalid' : '' ?>" id="email" name="email" value="<?= old('email') ?>" required>
+                                        <div class="form-text">Use this email address as your username when logging in.</div>
                                         <?php if (isset($validation['email'])): ?><div class="invalid-feedback"><?= esc($validation['email']) ?></div><?php endif; ?>
                                     </div>
                                     <div class="col-md-6">

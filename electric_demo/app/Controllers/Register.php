@@ -2,21 +2,22 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\UserAccountModel;
+use CodeIgniter\HTTP\RedirectResponse;
 
 class Register extends BaseController
 {
-    protected User $userModel;
+    protected UserAccountModel $userModel;
 
     public function __construct()
     {
-        $this->userModel = new User();
+        $this->userModel = new UserAccountModel();
     }
 
     public function index(): string
     {
         $data = [
-            'title' => 'Register - PowerFlow Electric',
+            'title' => 'Register - Puihaha Electric',
             'page' => 'register',
             'success' => session()->getFlashdata('success'),
             'error' => session()->getFlashdata('error'),
@@ -26,13 +27,13 @@ class Register extends BaseController
         return view('register', $data);
     }
 
-    public function create(): \CodeIgniter\HTTP\RedirectResponse
+    public function create(): RedirectResponse
     {
         $validation = \Config\Services::validation();
         $validation->setRules([
             'first_name' => 'required|min_length[2]|max_length[100]',
             'last_name' => 'required|min_length[2]|max_length[100]',
-            'email' => 'required|valid_email|is_unique[USERS.email]',
+            'email' => 'required|valid_email|is_unique[user_accounts.username]',
             'phone' => 'required|min_length[10]|max_length[20]',
             'address' => 'required|min_length[5]|max_length[255]',
             'city' => 'required|min_length[2]|max_length[100]',
@@ -49,25 +50,15 @@ class Register extends BaseController
         }
 
         $userData = [
-            'first_name' => $this->request->getPost('first_name'),
-            'last_name' => $this->request->getPost('last_name'),
-            'email' => $this->request->getPost('email'),
-            'phone' => $this->request->getPost('phone'),
-            'address' => $this->request->getPost('address'),
-            'city' => $this->request->getPost('city'),
-            'state' => $this->request->getPost('state'),
-            'zip_code' => $this->request->getPost('zip_code'),
-            'password' => $this->request->getPost('password'),
-            'user_type' => 'customer',
-            'is_active' => true,
-            'email_verified' => false,
+            'username' => $this->request->getPost('email'),
+            'password' => password_hash((string) $this->request->getPost('password'), PASSWORD_DEFAULT),
         ];
 
         try {
             $userId = $this->userModel->insert($userData);
 
             if ($userId) {
-                session()->setFlashdata('success', 'Registration successful! Welcome to PowerFlow Electric. You can now contact us for your electrical needs.');
+                session()->setFlashdata('success', 'Account created successfully. Use your registered email address as the username when logging in.');
                 return redirect()->to(base_url('register'));
             }
 

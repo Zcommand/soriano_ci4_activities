@@ -1,15 +1,25 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-<section class="admin-shell">
+<?php
+$statusBase = static fn(string $status = ''): string => base_url('customers') . '?' . http_build_query(array_filter([
+    'search' => $search_keyword,
+    'status' => $status,
+    'type' => $filter_type,
+], static fn($value): bool => $value !== ''));
+?>
+
+<section class="admin-shell customer-dashboard">
     <div class="container-fluid px-4">
-        <div class="admin-header">
+        <div class="dashboard-topbar">
             <div>
-                <p class="eyebrow mb-1">Customer Account Management</p>
-                <h1>Electric Customer Records</h1>
-                <p class="text-muted mb-0">Logged in as <strong><?= esc($username) ?></strong></p>
+                <div class="dashboard-title-row">
+                    <h1>Customers</h1>
+                    <span class="dashboard-user">Logged in as <?= esc($username) ?></span>
+                </div>
+                <p>Manage electric service accounts, contact details, meter records, and customer status.</p>
             </div>
-            <a href="<?= base_url('customers/new') ?>" class="btn btn-primary">
+            <a href="<?= base_url('customers/new') ?>" class="btn btn-primary dashboard-create-btn">
                 <i class="fas fa-plus me-2"></i>Add Customer
             </a>
         </div>
@@ -21,18 +31,47 @@
             <div class="alert alert-danger"><?= esc($error) ?></div>
         <?php endif; ?>
 
-        <div class="row g-3 mb-4">
-            <div class="col-lg-3 col-md-6"><div class="metric-card"><span>Total</span><strong><?= esc($total_accounts) ?></strong></div></div>
-            <div class="col-lg-3 col-md-6"><div class="metric-card is-active"><span>Active</span><strong><?= esc($active_accounts) ?></strong></div></div>
-            <div class="col-lg-3 col-md-6"><div class="metric-card is-inactive"><span>Inactive</span><strong><?= esc($inactive_accounts) ?></strong></div></div>
-            <div class="col-lg-3 col-md-6"><div class="metric-card is-suspended"><span>Suspended</span><strong><?= esc($suspended_accounts) ?></strong></div></div>
+        <div class="dashboard-metrics">
+            <div class="metric-card">
+                <span><i class="fas fa-users"></i>Total Customers</span>
+                <strong><?= esc($total_accounts) ?></strong>
+                <small>All account records</small>
+            </div>
+            <div class="metric-card is-active">
+                <span><i class="fas fa-circle-check"></i>Active</span>
+                <strong><?= esc($active_accounts) ?></strong>
+                <small>Currently connected</small>
+            </div>
+            <div class="metric-card is-inactive">
+                <span><i class="fas fa-circle-minus"></i>Inactive</span>
+                <strong><?= esc($inactive_accounts) ?></strong>
+                <small>Temporarily inactive</small>
+            </div>
+            <div class="metric-card is-suspended">
+                <span><i class="fas fa-triangle-exclamation"></i>Suspended</span>
+                <strong><?= esc($suspended_accounts) ?></strong>
+                <small>Requires attention</small>
+            </div>
+        </div>
+
+        <div class="customer-viewbar">
+            <div class="customer-tabs">
+                <a href="<?= esc($statusBase()) ?>" class="<?= $filter_status === '' ? 'active' : '' ?>"><i class="fas fa-users"></i>All Customers</a>
+                <a href="<?= esc($statusBase('active')) ?>" class="<?= $filter_status === 'active' ? 'active' : '' ?>"><i class="fas fa-circle-check"></i>Active</a>
+                <a href="<?= esc($statusBase('inactive')) ?>" class="<?= $filter_status === 'inactive' ? 'active' : '' ?>"><i class="fas fa-circle-minus"></i>Inactive</a>
+                <a href="<?= esc($statusBase('suspended')) ?>" class="<?= $filter_status === 'suspended' ? 'active' : '' ?>"><i class="fas fa-triangle-exclamation"></i>Suspended</a>
+            </div>
+            <span class="result-count"><?= esc($filtered_accounts) ?> result(s)</span>
         </div>
 
         <div class="tool-panel">
             <form method="get" action="<?= base_url('customers') ?>" class="row g-3 align-items-end">
                 <div class="col-lg-4">
                     <label class="form-label">Search</label>
-                    <input type="text" class="form-control" name="search" placeholder="Name, account, email, phone, meter" value="<?= esc($search_keyword) ?>">
+                    <div class="dashboard-search">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input type="text" class="form-control" name="search" placeholder="Name, account, email, phone, meter" value="<?= esc($search_keyword) ?>">
+                    </div>
                 </div>
                 <div class="col-lg-3">
                     <label class="form-label">Status</label>
@@ -60,17 +99,20 @@
         </div>
 
         <div class="data-panel">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="h5 mb-0">Accounts</h2>
-                <span class="text-muted small"><?= esc($filtered_accounts) ?> result(s)</span>
+            <div class="table-toolbar">
+                <div>
+                    <h2>Customer Records</h2>
+                    <p>Browse, edit, and maintain customer account information.</p>
+                </div>
+                <span><?= esc($filtered_accounts) ?> shown</span>
             </div>
 
             <div class="table-responsive">
                 <table class="table align-middle customer-table">
                     <thead>
                         <tr>
-                            <th>Account</th>
-                            <th>Customer</th>
+                            <th>Account ID</th>
+                            <th>Name</th>
                             <th>Contact</th>
                             <th>Meter</th>
                             <th>Type</th>
@@ -86,15 +128,20 @@
                             <tr>
                                 <td><strong><?= esc($account['account_number']) ?></strong></td>
                                 <td>
-                                    <div class="fw-semibold"><?= esc($account['customer_name']) ?></div>
-                                    <small class="text-muted"><?= esc($account['address']) ?></small>
+                                    <div class="customer-name-cell">
+                                        <span><?= esc(strtoupper(substr($account['customer_name'], 0, 1))) ?></span>
+                                        <div>
+                                            <div class="fw-semibold"><?= esc($account['customer_name']) ?></div>
+                                            <small class="text-muted"><?= esc($account['address']) ?></small>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <div><?= esc($account['email']) ?></div>
                                     <small class="text-muted"><?= esc($account['phone']) ?></small>
                                 </td>
                                 <td><?= esc($account['meter_number']) ?></td>
-                                <td><span class="badge rounded-pill text-bg-info"><?= esc(ucfirst($account['connection_type'])) ?></span></td>
+                                <td><span class="type-pill type-<?= esc($account['connection_type']) ?>"><?= esc(ucfirst($account['connection_type'])) ?></span></td>
                                 <td><span class="status-pill status-<?= esc($account['status']) ?>"><?= esc(ucfirst($account['status'])) ?></span></td>
                                 <td class="text-end">
                                     <a href="<?= base_url('customers/' . $account['id']) ?>" class="btn btn-sm btn-outline-primary" title="View"><i class="fas fa-eye"></i></a>

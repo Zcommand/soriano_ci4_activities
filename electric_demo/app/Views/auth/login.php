@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? 'Login - Puihaha Electric') ?></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="<?= base_url('public/assets/css/custom.css?v=20261002f') ?>" rel="stylesheet">
+    <link href="<?= base_url('public/assets/css/custom.css?v=20261005c') ?>" rel="stylesheet">
 </head>
 <body class="auth-body">
     <main class="auth-page">
@@ -40,7 +40,7 @@
 
                 <form action="<?= base_url('login') ?>" method="post" class="auth-form">
                     <?= csrf_field() ?>
-                    <label for="username">Username</label>
+                    <label for="username">Username or Registered Email</label>
                     <input type="text" id="username" name="username" value="<?= esc(old('username')) ?>" required autofocus>
 
                     <label for="password">Password</label>
@@ -54,11 +54,11 @@
                     <button type="submit" class="auth-submit">Login Now</button>
                 </form>
 
-                <p class="auth-hint">Default staff login: <strong>admin</strong> / <strong>admin123</strong></p>
+                <p class="auth-hint">Default staff login: <strong>admin</strong> / <strong>admin123</strong><br>Registered accounts log in using their email address.</p>
             </div>
         </section>
     </main>
 
-    <script src="<?= base_url('public/assets/js/app.js?v=20261002f') ?>"></script>
+    <script src="<?= base_url('public/assets/js/app.js?v=20261005c') ?>"></script>
 </body>
 </html>

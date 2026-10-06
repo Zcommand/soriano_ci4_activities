@@ -6,7 +6,7 @@
     <title><?= isset($title) ? esc($title) : 'Puihaha Electric' ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="<?= base_url('public/assets/css/custom.css?v=20261005c') ?>" rel="stylesheet">
+    <link href="<?= base_url('public/assets/css/custom.css?v=20261006a') ?>" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1e40af;
@@ -240,6 +240,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url('public/assets/js/app.js?v=20261005c') ?>"></script>
+<script src="<?= base_url('public/assets/js/app.js?v=20261006a') ?>"></script>
 </body>
 </html>
